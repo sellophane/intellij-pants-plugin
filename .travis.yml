@@ -48,8 +48,8 @@ matrix:
 
 script:
   # Test a single Java target without scala plugin
-  - ENABLE_SCALA_PLUGIN=false ./scripts/run-tests-ci.sh --test-junit-test=com.twitter.intellij.pants.integration.OSSPantsJavaExamplesIntegrationTest
-  - travis_wait 105 ./scripts/run-tests-ci.sh
+  - ENABLE_SCALA_PLUGIN=false ./scripts/run-tests-ci.sh --test-junit-test=com.twitter.intellij.pants.integration.OSSPantsMakeIntegrationTest
+#  - travis_wait 105 ./scripts/run-tests-ci.sh
 
 after_success:
   - scripts/deploy/deploy.sh

@@ -140,7 +140,7 @@ public abstract class PantsIntegrationTestCase extends ExternalSystemImportingTe
   public void setUp() throws Exception {
     cleanProjectIdeaDir();
     super.setUp();
-    VfsRootAccess.allowRootAccess(myProject, "/Library/Java/JavaVirtualMachines", "/usr/lib/jvm"); // TODO diagnostic: don't use project as disposable
+    VfsRootAccess.allowRootAccess(myProject, "/Library/Java/JavaVirtualMachines", "/usr/lib/jvm", "/workspace/.cache/pants"); // TODO diagnostic: don't use project as disposable
     for (String pluginId : getRequiredPluginIds()) {
       IdeaPluginDescriptor plugin = PluginManagerCore.getPlugin(PluginId.getId(pluginId));
       assertNotNull(pluginId + " plugin should be in classpath for integration tests!", plugin);
@@ -332,7 +332,7 @@ public abstract class PantsIntegrationTestCase extends ExternalSystemImportingTe
         });
       });
     });
-    importProject();
+    importProject(false);
     PantsMetrics.markIndexEnd();
   }
 
@@ -448,8 +448,13 @@ public abstract class PantsIntegrationTestCase extends ExternalSystemImportingTe
         }
       }
     };
-
+    String out = Stream.concat(output.stream(), errors.stream()).collect(Collectors.joining(" "));
     ProgramRunnerUtil.executeConfiguration(environment, false, false);
+    if(environment.getContentToReuse() == null) {
+      printOutput(out, true);
+
+    }
+    assertNotNull(out, environment.getContentToReuse());
     OSProcessHandler handler = (OSProcessHandler) environment.getContentToReuse().getProcessHandler();
     handler.addProcessListener(processAdapter);
     assertTrue(handler.waitFor());
@@ -540,8 +545,8 @@ public abstract class PantsIntegrationTestCase extends ExternalSystemImportingTe
   }
 
   @Override
-  protected void importProject(@NonNls @Language("Python") String config) throws IOException {
-    super.importProject(config);
+  protected void importProject(@NonNls @Language("Python") String config, Boolean skipIndexing ) throws IOException {
+    super.importProject(config, skipIndexing);
   }
 
   @Override
