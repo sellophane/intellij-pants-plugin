@@ -90,7 +90,7 @@ if [ ! -d .cache/pants/.git ]; then
     echo "Using $PANTS_SHA..."
     git checkout -f $PANTS_SHA
   fi
-  ./pants goals
+  ./pants help goals
   popd
   popd
 fi
@@ -99,7 +99,7 @@ if [ ! -d .cache/pants-host/.git ]; then
     pushd .cache
     git clone https://github.com/scalameta/pants -b 1.26.x-intellij-plugin pants-host
     pushd pants-host
-    ./pants goals
+    ./pants help goals
     popd
     popd
 fi
@@ -107,6 +107,8 @@ fi
 
 (
     cd "$CWD/testData"
-    curl -LSso "external-system-test-api.zip" "$EXTERNAL_SYSTEM_TEST_IMPL_JAR_URL"
-    echo "$EXTERNAL_SYSTEM_TEST_IMPL_JAR_SHA external-system-test-api.zip" | sha256sum -c - && unzip -o "external-system-test-api.zip"
+    #curl -LSso "external-system-test-api.zip" "$EXTERNAL_SYSTEM_TEST_IMPL_JAR_URL"
+    #cp "$CWD/build-external-api-jar/lib/external-system-test-api.zip" external-system-test-api.zip
+    #echo "$EXTERNAL_SYSTEM_TEST_IMPL_JAR_SHA external-system-test-api.zip" | sha256sum -c - && unzip -o "external-system-test-api.zip"
+    cp $CWD/build-external-api-jar/lib/* .
 )

@@ -1,6 +1,6 @@
 name: Build
 
-on: push
+on: workflow_dispatch
 
 env:
   artifact_path: /tmp/external-system-test-api.zip
@@ -23,7 +23,7 @@ jobs:
         ls -l ${{ env.artifact_path }}
         sha256sum ${{ env.artifact_path }}
     - name: Create Release
-      if: startsWith(github.ref, 'refs/tags/external-system-test-api-v')
+#      if: startsWith(github.ref, 'refs/tags/external-system-test-api-v')
       id: create_release
       uses: actions/create-release@v1
       env:
