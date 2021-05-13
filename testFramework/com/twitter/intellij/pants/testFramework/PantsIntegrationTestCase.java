@@ -451,7 +451,7 @@ public abstract class PantsIntegrationTestCase extends ExternalSystemImportingTe
     String out = Stream.concat(output.stream(), errors.stream()).collect(Collectors.joining(" "));
     ProgramRunnerUtil.executeConfiguration(environment, false, false);
     if(environment.getContentToReuse() == null) {
-      printOutput(out, true);
+      throw new RuntimeException(out);
 
     }
     assertNotNull(out, environment.getContentToReuse());
