@@ -141,7 +141,8 @@
     <runConfigurationExtension implementation="com.twitter.intellij.pants.execution.PantsClasspathRunConfigurationExtension"/>
     <configurationType implementation="com.twitter.intellij.pants.execution.PantsExternalTaskConfigurationType"/>
     <runConfigurationProducer implementation="com.twitter.intellij.pants.execution.PantsJUnitTestRunConfigurationProducer"/>
-
+    <indexing.shared.java.maven.mavenPackageCoordinatesInferenceExtension
+            implementation="com.intellij.indexing.shared.java.maven.MavenPackageInferenceExtension"/>
     <!--Listener to be called after resolving projects finishes. -->
     <externalSystemTaskNotificationListener
         implementation="com.twitter.intellij.pants.service.project.PantsProjectImportNotificationListener"/>
