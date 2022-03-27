@@ -7,7 +7,7 @@ import utils.publicationChannels
 
 plugins {
     scala
-    id("org.jetbrains.intellij") version "1.2.1"
+    id("org.jetbrains.intellij") version "1.3.0"
 }
 
 group = "com.intellij.plugins"
@@ -15,21 +15,24 @@ version = projectVersion
 
 allprojects {
     repositories {
+        maven("https://www.jetbrains.com/intellij-repository/snapshots/")
         mavenCentral()
     }
 
     pluginManager.withPlugin("org.jetbrains.intellij") {
         val ideaVersion: String by project
         val scalaPluginVersion: String by project
+        val pythonIdVersion: String by project
         intellij {
-            type.set("IC")
+            type.set("IU")
             version.set(ideaVersion)
             plugins.set(listOf(
                     "com.intellij.properties",
                     "org.intellij.groovy",
                     "com.intellij.gradle",
                     "com.intellij.java",
-                    "PythonCore:$ideaVersion",
+                    "Pythonid:$pythonIdVersion",
+                    "indexing-shared",
                     "org.intellij.scala:$scalaPluginVersion",
                     "JUnit")
             )
